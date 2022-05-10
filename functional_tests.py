@@ -1,59 +1,67 @@
-from selenium import webdriver                #(1)
+from selenium import webdriver  # (1)
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 import time
 import unittest
 
+# 功能测试
+
+
 class NewVisitorTest(unittest.TestCase):
     def setUp(self):
-        self.browser=webdriver.Chrome()
+        self.browser = webdriver.Chrome()
+
     def tearDown(self):
         self.browser.quit()
+
     def test_can_start_a_list_and_retrieve_it_later(self):
-        #Edith has heard about a cool new online to-do app.She goes
+        # Edith has heard about a cool new online to-do app.She goes
         # #to check out its homepage
-        self.browser.get("http://localhost:8000")          #(3)
+        self.browser.get("http://localhost:8000")  # (3)
 
-        #She notices the page title ande header mention to-do list
-        self.assertIn('To-Do',self.browser.title),"Browser title was "+self.browser.title
-        #header_text=self.browser.find_element_by_tag_name('h1').text
-        header_text=self.browser.find_element(By.TAG_NAME,'h1').text
-        self.assertIn('To-Do',header_text)
+        # She notices the page title ande header mention to-do list
+        self.assertIn(
+            'To-Do', self.browser.title), "Browser title was "+self.browser.title
+        # header_text=self.browser.find_element_by_tag_name('h1').text
+        header_text = self.browser.find_element(By.TAG_NAME, 'h1').text
+        self.assertIn('To-Do', header_text)
 
-        #She is invited to enter a to-do item straight away
-        #inputbox=self.browser.find_element_by_id('id_new_item')
-        inputbox=self.browser.find_element(By.ID,'id_new_item')
-        self.assertEqual(inputbox.get_attribute('placeholder'),'Enter a to-do item')
-        
-        #She types "Buy peacok feathers" into a text box(Edith's hobby
+        # She is invited to enter a to-do item straight away
+        # inputbox=self.browser.find_element_by_id('id_new_item')
+        inputbox = self.browser.find_element(By.ID, 'id_new_item')
+        self.assertEqual(inputbox.get_attribute(
+            'placeholder'), 'Enter a to-do item')
+
+        # She types "Buy peacok feathers" into a text box(Edith's hobby
         # is tying fly-fishing lures)
         inputbox.send_keys('Buy peacock feathers')
 
-        #when she hits enter,the page updates,and now the page lists
-        #"1: Buy peacok feathers" as an item in a to-do list
+        # when she hits enter,the page updates,and now the page lists
+        # "1: Buy peacok feathers" as an item in a to-do list
         inputbox.send_keys(Keys.ENTER)
         time.sleep(1)
 
-        #table=self.browser.find_element_by_id('id_list_table')
-        table=self.browser.find_element(By.ID,'id_list_table')
-        #rows=table.find_elements_by_tag_name('tr')
-        rows=table.find_elements(By.TAG_NAME,'tr')
-        self.assertTrue(any(row.text=='1:Buy peacock feathers' for row in rows))
-        
-        #There is still a text box inviting her to add another item.She
-        #enters "Use peacock feathers to make a fly"(Edith is very methodical)
+        # table=self.browser.find_element_by_id('id_list_table')
+        table = self.browser.find_element(By.ID, 'id_list_table')
+        # rows=table.find_elements_by_tag_name('tr')
+        rows = table.find_elements(By.TAG_NAME, 'tr')
+        self.assertTrue(any(row.text == '1:Buy peacock feathers' for row in rows),
+                        "new to-do item did not appear in table")
+
+        # There is still a text box inviting her to add another item.She
+        # enters "Use peacock feathers to make a fly"(Edith is very methodical)
         self.fail('Finish the test!')
 
 
-#The page updates again,and now shows both items on her list
+# The page updates again,and now shows both items on her list
 
-#Edith wonders whether the site will remember her list. The she sees
-#that the site has generated a unique URL for her -- there is some
-#explanatory text to that effect.
+# Edith wonders whether the site will remember her list. The she sees
+# that the site has generated a unique URL for her -- there is some
+# explanatory text to that effect.
 
-#She visits that URL - her to-do list is stil there.
+# She visits that URL - her to-do list is stil there.
 
-#Satisfied, she goes back to sleep
+# Satisfied, she goes back to sleep
 
-if __name__=='__main__':
+if __name__ == '__main__':
     unittest.main(warnings='ignore')
