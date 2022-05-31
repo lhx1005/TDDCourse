@@ -127,3 +127,5 @@ class NewVisitorTest(LiveServerTestCase):
         self.assertNotIn('Buy milk', page_text)
 
         # Satisfied, they both go back to sleep
+
+    
