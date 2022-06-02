@@ -7,7 +7,8 @@ from selenium import webdriver  # (1)
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 
-from django.test import LiveServerTestCase
+#from django.test import LiveServerTestCase
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 
 from selenium.common.exceptions import WebDriverException
 MAX_WAIT = 10
@@ -16,7 +17,7 @@ MAX_WAIT = 10
 # 功能测试
 
 
-class NewVisitorTest(LiveServerTestCase):
+class NewVisitorTest(StaticLiveServerTestCase):
     def setUp(self):
         self.browser = webdriver.Chrome()
 
