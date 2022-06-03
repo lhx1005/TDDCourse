@@ -1,8 +1,5 @@
 from msilib.schema import tables
-from tkinter import E
-import unittest
 import time
-import imp
 from selenium import webdriver  # (1)
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
@@ -11,15 +8,20 @@ from selenium.webdriver.common.by import By
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 
 from selenium.common.exceptions import WebDriverException
+
+import os
+
 MAX_WAIT = 10
 
 
 # 功能测试
 
-
 class NewVisitorTest(StaticLiveServerTestCase):
     def setUp(self):
         self.browser = webdriver.Chrome()
+        staging_server = os.environ.get('STAGING_SERVER')
+        if staging_server:
+            self.live_server_url = 'http://'+staging_server
 
     def tearDown(self):
         self.browser.quit()
@@ -138,7 +140,7 @@ class NewVisitorTest(StaticLiveServerTestCase):
         inputbox = self.browser.find_element_by_id('id_new_item')
         self.assertAlmostEqual(
             inputbox.location['x']+inputbox.size['width']/2, 512, delta=10)
-        
+
         # She starts a new list and sees the input is nicely
         # centered there too
         inputbox.send_keys('testing')
