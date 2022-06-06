@@ -1,4 +1,3 @@
-from msilib.schema import tables
 import time
 from selenium import webdriver  # (1)
 from selenium.webdriver.common.keys import Keys
@@ -19,7 +18,8 @@ MAX_WAIT = 10
 class NewVisitorTest(StaticLiveServerTestCase):
     def setUp(self):
         self.browser = webdriver.Chrome()
-        staging_server = os.environ.get('STAGING_SERVER')
+        #staging_server = os.environ.get('STAGING_SERVER')
+        staging_server = '47.93.188.138'
         if staging_server:
             self.live_server_url = 'http://'+staging_server
 
